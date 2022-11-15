@@ -9,55 +9,31 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <java.version>1.8</java.version>
+        <source.version>1.8</source.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hadoop.version>3.1.2</hadoop.version>
+        <spark.version>3.1.2</spark.version>
     </properties>
 
-   <repositories>
-       <repository>
-           <id>local-maven-repo</id>
-           <url>file:///${project.basedir}/local-maven-repo</url>
-       </repository>
-   </repositories>
-
-   <dependencies>
-       <dependency>
-           <groupId>org.apache.wayang</groupId>
-           <artifactId>wayang-core</artifactId>
-           <version>2.42.0-MATTHEW</version>
-       </dependency>
-       <dependency>
-           <groupId>org.apache.wayang</groupId>
-           <artifactId>wayang-basic</artifactId>
-           <version>2.42.0-MATTHEW</version>
-       </dependency>
-       <dependency>
-           <groupId>org.apache.wayang</groupId>
-           <artifactId>wayang-java</artifactId>
-           <version>2.42.0-MATTHEW</version>
-       </dependency>
-
-       <dependency>
-           <groupId>org.apache.wayang</groupId>
-           <artifactId>wayang-api-scala-java_2.11</artifactId>
-           <version>2.42.0-MATTHEW</version>
-       </dependency>
-       <dependency>
-           <groupId>org.apache.wayang</groupId>
-           <artifactId>wayang-hackit-api</artifactId>
-           <version>2.42.0-MATTHEW</version>
-       </dependency>
-       <dependency>
-           <groupId>org.apache.wayang</groupId>
-           <artifactId>wayang-hackit-core</artifactId>
-           <version>2.42.0-MATTHEW</version>
-       </dependency>
-   </dependencies>
-
     <build>
-        <finalName>my-project-name</finalName>
+        <finalName>my-project</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -75,11 +51,6 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.example.Main</mainClass>
-                        </manifest>
-                    </archive>
                 </configuration>
                 <executions>
                     <execution>
@@ -93,6 +64,101 @@
             </plugin>
         </plugins>
     </build>
+
+
+   <dependencies>
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-core</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-basic</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-java</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-spark_2.11</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.spark</groupId>
+           <artifactId>spark-core_2.11</artifactId>
+           <version>2.4.0</version>
+       </dependency>
+
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-api-scala-java_2.11</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-hackit-api</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.wayang</groupId>
+           <artifactId>wayang-hackit-core</artifactId>
+           <version>2.42.0-MATTHEW</version>
+       </dependency>
+
+       <dependency>
+           <groupId>org.apache.hadoop</groupId>
+           <artifactId>hadoop-common</artifactId>
+           <version>${hadoop.version}</version>
+           <exclusions>
+               <exclusion>
+                   <groupId>com.thoughtworks.paranamer</groupId>
+                   <artifactId>paranamer</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.hadoop</groupId>
+           <artifactId>hadoop-hdfs</artifactId>
+           <version>${hadoop.version}</version>
+           <exclusions>
+               <exclusion>
+                   <groupId>com.thoughtworks.paranamer</groupId>
+                   <artifactId>paranamer</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.hadoop</groupId>
+           <artifactId>hadoop-mapreduce-client-core</artifactId>
+           <version>${hadoop.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.hadoop</groupId>
+           <artifactId>hadoop-client</artifactId>
+           <version>${hadoop.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.hadoop</groupId>
+           <artifactId>hadoop-aws</artifactId>
+           <version>${hadoop.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.logging.log4j</groupId>
+           <artifactId>log4j-api</artifactId>
+           <version>2.17.0</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.logging.log4j</groupId>
+           <artifactId>log4j-core</artifactId>
+           <version>2.17.0</version>
+       </dependency>
+   </dependencies>
+
+
 
 
 </project>
